@@ -32,7 +32,7 @@ resource "aws_lambda_permission" "check_in" {
   action        = "lambda:InvokeFunction"
   function_name = "${aws_lambda_function.check_in.function_name}"
   principal     = "apigateway.amazonaws.com"
-  source_arn    = "${aws_api_gateway_stage.stage.execution_arn}/*/*/*"
+  source_arn    = "${aws_api_gateway_stage.stage.execution_arn}/*/*"
 }
 
 resource "aws_cloudwatch_log_group" "look_nearby" {
@@ -69,5 +69,5 @@ resource "aws_lambda_permission" "look_nearby" {
   action        = "lambda:InvokeFunction"
   function_name = "${aws_lambda_function.look_nearby.function_name}"
   principal     = "apigateway.amazonaws.com"
-  source_arn    = "${aws_api_gateway_stage.stage.execution_arn}/*/*/*"
+  source_arn    = "${aws_api_gateway_stage.stage.execution_arn}/*/*"
 }
