@@ -20,7 +20,7 @@ data "aws_route53_zone" "domain" {
 }
 
 data "aws_acm_certificate" "main" {
-  domain = "diogo.im"
+  domain = "contentful.diogo.im"
 }
 
 resource "aws_route53_record" "api" {

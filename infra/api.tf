@@ -77,7 +77,7 @@ resource "aws_api_gateway_method_settings" "settings" {
 }
 
 resource "aws_api_gateway_domain_name" "api" {
-  domain_name     = "contentful.diogo.im"
+  domain_name     = "api.contentful.diogo.im"
   certificate_arn = "${data.aws_acm_certificate.main.certificate_arn}"
 }
 
