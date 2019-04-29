@@ -15,6 +15,10 @@ provider "archive" {
   version = "~> 1.2"
 }
 
+data "aws_region" "current" {
+  # ...
+}
+
 data "aws_route53_zone" "domain" {
   name = "diogo.im"
 }
@@ -24,14 +28,14 @@ data "aws_acm_certificate" "main" {
 }
 
 resource "aws_route53_record" "api" {
-  name    = "${aws_api_gateway_domain_name.api.domain_name}"
+  name    = "api.contentful.diogo.im"
   type    = "CNAME"
   zone_id = "${data.aws_route53_zone.domain.id}"
 
   alias {
     evaluate_target_health = true
-    name                   = "${aws_api_gateway_domain_name.api.cloudfront_domain_name}"
-    zone_id                = "${aws_api_gateway_domain_name.api.cloudfront_zone_id}"
+    name                   = "${aws_cloudfront_distribution.api.domain_name}"
+    zone_id                = "${aws_cloudfront_distribution.api.hosted_zone_id}"
   }
 }
 
