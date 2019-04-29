@@ -40,6 +40,10 @@ locals {
   look_nearby = "beer-nearby-look-nearby"
 }
 
+output "api_endpoint" {
+  value = "${aws_api_gateway_stage.stage.invoke_url}"
+}
+
 output "kibana_endpoint" {
   value = "${aws_elasticsearch_domain.elasticsearch.kibana_endpoint}"
 }
