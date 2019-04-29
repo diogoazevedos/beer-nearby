@@ -1,7 +1,7 @@
 module.exports = {
   entry: {
-    checkIn: './func/checkIn.js',
-    lookNearby: './func/lookNearby.js',
+    checkIn: './src/checkIn.js',
+    lookNearby: './src/lookNearby.js',
   },
   externals: ['aws-sdk'],
   mode: 'production',
