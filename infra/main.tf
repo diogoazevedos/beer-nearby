@@ -15,6 +15,26 @@ provider "archive" {
   version = "~> 1.2"
 }
 
+data "aws_route53_zone" "domain" {
+  name = "diogo.im"
+}
+
+data "aws_acm_certificate" "main" {
+  domain = "diogo.im"
+}
+
+resource "aws_route53_record" "api" {
+  name    = "${aws_api_gateway_domain_name.api.domain_name}"
+  type    = "CNAME"
+  zone_id = "${data.aws_route53_zone.domain.id}"
+
+  alias {
+    evaluate_target_health = true
+    name                   = "${aws_api_gateway_domain_name.api.cloudfront_domain_name}"
+    zone_id                = "${aws_api_gateway_domain_name.api.cloudfront_zone_id}"
+  }
+}
+
 locals {
   check_in    = "beer-nearby-check-in"
   look_nearby = "beer-nearby-look-nearby"
