@@ -66,7 +66,7 @@ data "aws_iam_policy_document" "look_nearby_policy" {
 
   statement {
     actions = [
-      "es:ESHttpGet",
+      "es:ESHttpPost",
     ]
 
     resources = [
