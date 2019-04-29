@@ -1,0 +1,14 @@
+{
+  "mappings": {
+    "check_in": {
+      "properties": {
+        "location": {
+          "type": "geo_point"
+        },
+        "timestamp": {
+        	"type": "date"
+        }
+      }
+    }
+  }
+}
