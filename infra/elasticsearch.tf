@@ -20,6 +20,14 @@ data "aws_iam_policy_document" "elasticsearch" {
       "es:*",
     ]
 
+    principals {
+      type = "*"
+
+      identifiers = [
+        "*",
+      ]
+    }
+
     resources = [
       "${aws_elasticsearch_domain.elasticsearch.arn}/*",
     ]
