@@ -1,8 +1,0 @@
-#!/bin/bash
-
-set -eou pipefail
-
-rm -rf .terraform
-
-terraform init infra
-terraform apply infra
