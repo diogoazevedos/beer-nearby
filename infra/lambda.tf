@@ -8,7 +8,7 @@ data "archive_file" "check_in" {
   output_path = "checkIn.zip"
 
   source {
-    content  = "${file("func/checkIn.js")}"
+    content  = "${file("dist/checkIn.js")}"
     filename = "index.js"
   }
 }
@@ -45,7 +45,7 @@ data "archive_file" "look_nearby" {
   output_path = "lookNearby.zip"
 
   source {
-    content  = "${file("func/lookNearby.js")}"
+    content  = "${file("dist/lookNearby.js")}"
     filename = "index.js"
   }
 }
