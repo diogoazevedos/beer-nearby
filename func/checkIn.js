@@ -14,8 +14,8 @@ exports.handler = async ({ body }) => {
   const { latitude, longitude } = JSON.parse(body);
 
   await client.index({
-    index: 'beer-nearby',
-    type: 'check-in',
+    index: 'beer_nearby',
+    type: 'check_in',
     body: {
       location: { lat: latitude, lon: longitude },
       timestamp: Date.now(),
