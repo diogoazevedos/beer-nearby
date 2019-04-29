@@ -35,6 +35,18 @@ resource "aws_route53_record" "api" {
   }
 }
 
+resource "aws_route53_record" "beer" {
+  name    = "beer.contentful.diogo.im"
+  type    = "CNAME"
+  zone_id = "${data.aws_route53_zone.domain.id}"
+
+  alias {
+    evaluate_target_health = true
+    name                   = "${aws_cloudfront_distribution.punkapi.domain_name}"
+    zone_id                = "${aws_cloudfront_distribution.punkapi.hosted_zone_id}"
+  }
+}
+
 locals {
   check_in    = "beer-nearby-check-in"
   look_nearby = "beer-nearby-look-nearby"
