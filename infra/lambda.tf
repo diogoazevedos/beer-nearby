@@ -18,6 +18,8 @@ resource "aws_lambda_function" "check_in" {
   filename         = "${data.archive_file.check_in.output_path}"
   runtime          = "nodejs8.10"
   handler          = "index.handler"
+  memory_size      = 1536
+  timeout          = 10
   role             = "${aws_iam_role.check_in.arn}"
   source_code_hash = "${data.archive_file.check_in.output_base64sha256}"
 
@@ -55,6 +57,8 @@ resource "aws_lambda_function" "look_nearby" {
   filename         = "${data.archive_file.look_nearby.output_path}"
   runtime          = "nodejs8.10"
   handler          = "index.handler"
+  memory_size      = 1536
+  timeout          = 10
   role             = "${aws_iam_role.look_nearby.arn}"
   source_code_hash = "${data.archive_file.look_nearby.output_base64sha256}"
 
