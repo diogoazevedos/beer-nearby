@@ -2,11 +2,27 @@
   "mappings": {
     "check_in": {
       "properties": {
+        "beer": {
+          "properties": {
+            "id": {
+              "type": "long"
+            },
+            "name": {
+              "type": "keyword"
+            },
+            "tagline": {
+              "type": "keyword"
+            },
+            "description": {
+              "type": "text"
+            }
+          }
+        },
         "location": {
           "type": "geo_point"
         },
         "timestamp": {
-        	"type": "date"
+          "type": "date"
         }
       }
     }
