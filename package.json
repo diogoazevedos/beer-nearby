@@ -5,7 +5,10 @@
   },
   "dependencies": {
     "elasticsearch": "^15.4.1",
-    "http-aws-es": "^6.0.0"
+    "geolib": "^2.0.24",
+    "http-aws-es": "^6.0.0",
+    "ngeohash": "^0.6.3",
+    "ramda": "^0.26.1"
   },
   "devDependencies": {
     "eslint": "^5.16.0",

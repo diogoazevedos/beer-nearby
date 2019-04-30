@@ -1,14 +1,12 @@
+const { getDistance } = require('geolib');
+const { decode } = require('ngeohash');
+const { pick } = require('ramda');
 const client = require('./client');
-
-const unwrap = ({ hits: { hits, total } }) => ({
-  total,
-  data: hits.map(({ _id, _source, sort: [distance] }) => ({ distance, id: _id, ..._source })),
-});
 
 exports.handler = async ({ queryStringParameters }) => {
   const { latitude, longitude } = queryStringParameters;
   const location = { lat: latitude, lon: longitude };
-  const response = await client.search({
+  const { hits, aggregations } = await client.search({
     index: 'beer_nearby',
     type: 'check_in',
     body: {
@@ -28,10 +26,18 @@ exports.handler = async ({ queryStringParameters }) => {
           beers: { terms: { field: '_id' } },
         },
       },
-      sort: [
-        { _geo_distance: { location, order: 'asc' } },
-      ],
     },
+  });
+
+  const checkIns = new Map(hits.hits.map(({ _id, _source }) => [_id, _source]));
+  const response = aggregations.locations.buckets.map(({ beers, key: geohash }) => {
+    const clusterLocation = pick(['latitude', 'longitude'], decode(geohash));
+
+    return {
+      ...clusterLocation,
+      distance: getDistance(location, clusterLocation),
+      beers: beers.buckets.map(({ key: checkInId }) => checkIns.get(checkInId).beer),
+    };
   });
 
   return {
@@ -39,6 +45,6 @@ exports.handler = async ({ queryStringParameters }) => {
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(unwrap(response)),
+    body: JSON.stringify(response),
   };
 };
