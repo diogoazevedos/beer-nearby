@@ -9,7 +9,7 @@ resource "aws_api_gateway_rest_api" "api" {
 resource "aws_api_gateway_resource" "check_in" {
   rest_api_id = "${aws_api_gateway_rest_api.api.id}"
   parent_id   = "${aws_api_gateway_rest_api.api.root_resource_id}"
-  path_part   = "check-in"
+  path_part   = "check_in"
 }
 
 resource "aws_api_gateway_method" "check_in" {
@@ -31,7 +31,7 @@ resource "aws_api_gateway_integration" "check_in" {
 resource "aws_api_gateway_resource" "look_nearby" {
   rest_api_id = "${aws_api_gateway_rest_api.api.id}"
   parent_id   = "${aws_api_gateway_rest_api.api.root_resource_id}"
-  path_part   = "look-nearby"
+  path_part   = "look_nearby"
 }
 
 resource "aws_api_gateway_method" "look_nearby" {
