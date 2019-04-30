@@ -18,6 +18,7 @@ resource "aws_cloudfront_distribution" "api" {
   }
 
   default_cache_behavior {
+    compress         = true
     allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
     cached_methods   = ["GET", "HEAD", "OPTIONS"]
     target_origin_id = "api"
@@ -70,6 +71,7 @@ resource "aws_cloudfront_distribution" "punkapi" {
   }
 
   default_cache_behavior {
+    compress         = true
     allowed_methods  = ["GET", "HEAD"]
     cached_methods   = ["GET", "HEAD"]
     target_origin_id = "punkapi"
