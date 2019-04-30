@@ -49,17 +49,6 @@ resource "aws_route53_record" "kibana" {
   ]
 }
 
-resource "aws_route53_record" "punkapi" {
-  name    = "search.contentful.diogo.im"
-  type    = "CNAME"
-  ttl     = 300
-  zone_id = "${data.aws_route53_zone.domain.id}"
-
-  records = [
-    "${aws_cloudfront_distribution.punkapi.domain_name}",
-  ]
-}
-
 resource "aws_route53_record" "elasticsearch" {
   name    = "elasticsearch.contentful.diogo.im"
   type    = "CNAME"
