@@ -36,7 +36,10 @@ exports.handler = async ({ queryStringParameters }) => {
     return {
       ...clusterLocation,
       distance: getDistance(location, clusterLocation),
-      beers: beers.buckets.map(({ key: checkInId }) => checkIns.get(checkInId).beer),
+      beers: beers.buckets.map(({ key: checkInId }) => {
+        const { beer } = checkIns.get(checkInId);
+        return { ...beer, image_url: `https://images.punkapi.com/v2/${beer.id}.png` };
+      }),
     };
   });
 
