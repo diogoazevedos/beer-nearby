@@ -30,40 +30,48 @@ data "aws_acm_certificate" "main" {
 resource "aws_route53_record" "api" {
   name    = "api.contentful.diogo.im"
   type    = "CNAME"
+  ttl     = 300
   zone_id = "${data.aws_route53_zone.domain.id}"
 
-  alias {
-    evaluate_target_health = true
-    name                   = "${aws_cloudfront_distribution.api.domain_name}"
-    zone_id                = "${aws_cloudfront_distribution.api.hosted_zone_id}"
-  }
+  records = [
+    "${aws_cloudfront_distribution.api.domain_name}",
+  ]
+}
+
+resource "aws_route53_record" "kibana" {
+  name    = "kibana.contentful.diogo.im"
+  type    = "CNAME"
+  ttl     = 300
+  zone_id = "${data.aws_route53_zone.domain.id}"
+
+  records = [
+    "${aws_elasticsearch_domain.elasticsearch.kibana_endpoint}",
+  ]
 }
 
 resource "aws_route53_record" "punkapi" {
   name    = "search.contentful.diogo.im"
   type    = "CNAME"
+  ttl     = 300
   zone_id = "${data.aws_route53_zone.domain.id}"
 
-  alias {
-    evaluate_target_health = true
-    name                   = "${aws_cloudfront_distribution.punkapi.domain_name}"
-    zone_id                = "${aws_cloudfront_distribution.punkapi.hosted_zone_id}"
-  }
+  records = [
+    "${aws_cloudfront_distribution.punkapi.domain_name}",
+  ]
+}
+
+resource "aws_route53_record" "elasticsearch" {
+  name    = "elasticsearch.contentful.diogo.im"
+  type    = "CNAME"
+  ttl     = 300
+  zone_id = "${data.aws_route53_zone.domain.id}"
+
+  records = [
+    "${aws_elasticsearch_domain.elasticsearch.endpoint}",
+  ]
 }
 
 locals {
   check_in    = "beer-nearby-check-in"
   look_nearby = "beer-nearby-look-nearby"
-}
-
-output "api_endpoint" {
-  value = "${aws_api_gateway_stage.stage.invoke_url}"
-}
-
-output "kibana_endpoint" {
-  value = "${aws_elasticsearch_domain.elasticsearch.kibana_endpoint}"
-}
-
-output "elasticsearch_endpoint" {
-  value = "${aws_elasticsearch_domain.elasticsearch.endpoint}"
 }
