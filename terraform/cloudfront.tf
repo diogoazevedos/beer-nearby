@@ -88,7 +88,7 @@ resource "aws_cloudfront_distribution" "punkapi" {
   }
 
   aliases = [
-    "beer.contentful.diogo.im",
+    "search.contentful.diogo.im",
   ]
 
   restrictions {

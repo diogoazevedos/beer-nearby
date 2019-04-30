@@ -39,8 +39,8 @@ resource "aws_route53_record" "api" {
   }
 }
 
-resource "aws_route53_record" "beer" {
-  name    = "beer.contentful.diogo.im"
+resource "aws_route53_record" "punkapi" {
+  name    = "search.contentful.diogo.im"
   type    = "CNAME"
   zone_id = "${data.aws_route53_zone.domain.id}"
 
