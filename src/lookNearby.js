@@ -20,6 +20,14 @@ exports.handler = async ({ queryStringParameters }) => {
           ],
         },
       },
+      aggregations: {
+        locations: {
+          geogrid_hash: { field: 'location', precision: 8 },
+        },
+        aggregations: {
+          beers: { terms: { field: '_id' } },
+        },
+      },
       sort: [
         { _geo_distance: { location, order: 'asc' } },
       ],
