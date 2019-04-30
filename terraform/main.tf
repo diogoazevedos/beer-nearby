@@ -38,29 +38,15 @@ resource "aws_route53_record" "api" {
   ]
 }
 
-resource "aws_route53_record" "kibana" {
-  name    = "kibana.contentful.diogo.im"
-  type    = "CNAME"
-  ttl     = 300
-  zone_id = "${data.aws_route53_zone.domain.id}"
-
-  records = [
-    "${aws_elasticsearch_domain.elasticsearch.kibana_endpoint}",
-  ]
-}
-
-resource "aws_route53_record" "elasticsearch" {
-  name    = "elasticsearch.contentful.diogo.im"
-  type    = "CNAME"
-  ttl     = 300
-  zone_id = "${data.aws_route53_zone.domain.id}"
-
-  records = [
-    "${aws_elasticsearch_domain.elasticsearch.endpoint}",
-  ]
-}
-
 locals {
   check_in    = "beer-nearby-check-in"
   look_nearby = "beer-nearby-look-nearby"
+}
+
+output "kibana_endpoint" {
+  value = "${aws_elasticsearch_domain.elasticsearch.kibana_endpoint}"
+}
+
+output "elasticsearch_endpoint" {
+  value = "${aws_elasticsearch_domain.elasticsearch.endpoint}"
 }
