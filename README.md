@@ -1,10 +1,10 @@
 # Beer Nearby
 
-### Search beers
+## Search beers
 
 To search beers use the [Punk API](https://punkapi.com) third-party service, it's very complete, but debounce your requests, since the API has a rate limit of `3600` requests per hour. They already use a CloudFront to cache similar requests, so it can be handy to us.
 
-### Check-in
+## Check-in
 
 ```sh
 $ curl -6 -H 'Content-Type: application/json' -d @checkIn.json https://api.contentful.diogo.im/check_in
@@ -25,7 +25,7 @@ Where the `checkIn.json` is:
 }
 ```
 
-### What's nearby
+## What's nearby
 
 ```sh
 $ curl -6 https://api.contentful.diogo.im/look_nearby?latitude=<latitude>&longitude=<longitude>
