@@ -4,6 +4,7 @@
     "build": "webpack --config webpack.config.js"
   },
   "dependencies": {
+    "@hapi/joi": "^15.0.1",
     "elasticsearch": "^15.4.1",
     "geolib": "^2.0.24",
     "http-aws-es": "^6.0.0",

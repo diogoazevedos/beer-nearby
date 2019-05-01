@@ -1,11 +1,22 @@
+const Joi = require('@hapi/joi');
 const { getDistance } = require('geolib');
 const { decode } = require('ngeohash');
-const { pick } = require('ramda');
+const { pick, prop } = require('ramda');
 const client = require('./client');
 
+const lookNearby = Joi.object().keys({
+  latitude: Joi.number().min(-90).max(90).required(),
+  longitude: Joi.number().min(-180).max(180).required(),
+});
+
 exports.handler = async ({ queryStringParameters }) => {
-  const { latitude, longitude } = queryStringParameters;
-  const location = { lat: latitude, lon: longitude };
+  const { error, value } = lookNearby.validate(queryStringParameters);
+
+  if (error) {
+    return { statusCode: 422, body: JSON.stringify(prop('details', error)) };
+  }
+
+  const location = { lat: value.latitude, lon: value.longitude };
   const { hits, aggregations } = await client.search({
     index: 'beer_nearby',
     type: 'check_in',
