@@ -91,7 +91,7 @@ test('should return nearby a check-ins', async () => {
         bool: {
           filter: [
             { geo_distance: { location: { lat: -29.954693, lon: -51.624725 }, distance: '1km' } },
-            { range: { timestamp: { gte: 'now-15m' } } },
+            { range: { timestamp: { gte: 'now-1h' } } },
           ],
         },
       },

@@ -26,7 +26,7 @@ exports.handler = async ({ queryStringParameters }) => {
         bool: {
           filter: [
             { geo_distance: { location, distance: '1km' } },
-            { range: { timestamp: { gte: 'now-15m' } } },
+            { range: { timestamp: { gte: 'now-1h' } } },
           ],
         },
       },
