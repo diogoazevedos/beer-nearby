@@ -49,3 +49,22 @@ The response looks like:
   }]
 }]
 ```
+
+## Running locally
+
+```sh
+$ docker-compose -p beer_nearby up -d
+$ curl -4 -X PUT -H 'Content-Type: application/json' -d @mapping.json http://localhost:9200/beer_nearby
+```
+
+### CheckIn
+
+```sh
+$ docker run --rm -v $PWD:/var/task --network beer_nearby_elastic -e ELASTICSEARCH_HOST=elasticsearch:9200 lambci/lambda:nodejs8.10 src/checkIn.handler '{"body":"{\"latitude\":-29,\"longitude\":-51,\"beer\":{\"id\":18,\"name\":\"Russian Doll – India Pale Ale\",\"tagline\":\"Nesting Hop Bomb.\",\"description\":\"The levels of hops vary throughout the range. We love hops, so all four beers are big, bitter badasses, but by tweaking the amount of each hop used later in the boil and during dry- hopping, we can balance the malty backbone with some unexpected flavours. Simcoe is used in the whirlpool for all four beers, and yet still lends different characters to each\"}}"}'
+```
+
+### LookNearby
+
+```sh
+$ docker run --rm -v $PWD:/var/task --network beer_nearby_elastic -e ELASTICSEARCH_HOST=elasticsearch:9200 lambci/lambda:nodejs8.10 src/lookNearby.handler '{"queryStringParameters":{"latitude":-29,"longitude":-51}}'
+```
