@@ -70,6 +70,20 @@ resource "aws_api_gateway_stage" "stage" {
   deployment_id = "${aws_api_gateway_deployment.deployment.id}"
 }
 
+resource "aws_api_gateway_usage_plan" "usage_plan" {
+  name = "contenful"
+
+  api_stages {
+    api_id = "${aws_api_gateway_rest_api.api.id}"
+    stage  = "${aws_api_gateway_stage.stage.stage_name}"
+  }
+
+  throttle_settings {
+    burst_limit = 10
+    rate_limit  = 20
+  }
+}
+
 resource "aws_api_gateway_method_settings" "settings" {
   rest_api_id = "${aws_api_gateway_rest_api.api.id}"
   stage_name  = "${aws_api_gateway_stage.stage.stage_name}"
