@@ -50,16 +50,16 @@ elasticsearch.Client = jest.fn().mockImplementation(() => ({
 
 const { handler } = require('../src/lookNearby');
 
+const headers = { 'Content-Type': 'application/json' };
+
 test('should return nearby a check-ins', async () => {
   const response = await handler({
     queryStringParameters: { latitude: -29.954693, longitude: -51.624725 },
   });
 
   expect(response).toEqual({
+    headers,
     statusCode: 200,
-    headers: {
-      'Content-Type': 'application/json',
-    },
     body: JSON.stringify([{
       latitude: -29.954652786254883,
       longitude: -51.62458419799805,
@@ -112,6 +112,6 @@ test('should return a client error', async () => {
     queryStringParameters: { latitude: 'abcde', longitude: 'fghij' },
   });
 
-  expect(response).toEqual({ statusCode: 422, body: expect.any(String) });
+  expect(response).toEqual({ headers, statusCode: 422, body: expect.any(String) });
   expect(mockSearch).not.toBeCalled();
 });

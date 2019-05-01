@@ -7,6 +7,8 @@ elasticsearch.Client = jest.fn().mockImplementation(() => ({
 
 const { handler } = require('../src/checkIn');
 
+const headers = { 'Content-Type': 'application/json' };
+
 test('should create a check-in point', async () => {
   const response = await handler({
     body: JSON.stringify({
@@ -55,6 +57,6 @@ test('should return a client error', async () => {
     }),
   });
 
-  expect(response).toEqual({ statusCode: 422, body: expect.any(String) });
+  expect(response).toEqual({ headers, statusCode: 422, body: expect.any(String) });
   expect(mockIndex).not.toBeCalled();
 });
