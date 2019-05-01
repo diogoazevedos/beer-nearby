@@ -10,7 +10,7 @@ To search beers use the [Punk API](https://punkapi.com) third-party service, it'
 $ curl -6 -H 'Content-Type: application/json' -d @checkIn.json https://api.contentful.diogo.im/check_in
 ```
 
-Where the `checkIn.json` is:
+Where the `checkIn.json` looks like:
 
 ```js
 {
