@@ -2,6 +2,7 @@ const Joi = require('@hapi/joi');
 const { prop } = require('ramda');
 const client = require('./client');
 
+const headers = { 'Content-Type': 'application/json' };
 const checkIn = Joi.object().keys({
   latitude: Joi.number().min(-90).max(90).required(),
   longitude: Joi.number().min(-180).max(180).required(),
@@ -17,7 +18,7 @@ exports.handler = async ({ body }) => {
   const { error, value } = checkIn.validate(JSON.parse(body));
 
   if (error) {
-    return { statusCode: 422, body: JSON.stringify(prop('details', error)) };
+    return { headers, statusCode: 422, body: JSON.stringify(prop('details', error)) };
   }
 
   await client.index({

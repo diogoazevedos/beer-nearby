@@ -4,6 +4,7 @@ const { decode } = require('ngeohash');
 const { pick, prop } = require('ramda');
 const client = require('./client');
 
+const headers = { 'Content-Type': 'application/json' };
 const lookNearby = Joi.object().keys({
   latitude: Joi.number().min(-90).max(90).required(),
   longitude: Joi.number().min(-180).max(180).required(),
@@ -13,7 +14,7 @@ exports.handler = async ({ queryStringParameters }) => {
   const { error, value } = lookNearby.validate(queryStringParameters);
 
   if (error) {
-    return { statusCode: 422, body: JSON.stringify(prop('details', error)) };
+    return { headers, statusCode: 422, body: JSON.stringify(prop('details', error)) };
   }
 
   const location = { lat: value.latitude, lon: value.longitude };
@@ -54,11 +55,5 @@ exports.handler = async ({ queryStringParameters }) => {
     };
   });
 
-  return {
-    statusCode: 200,
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(response),
-  };
+  return { headers, statusCode: 200, body: JSON.stringify(response) };
 };
