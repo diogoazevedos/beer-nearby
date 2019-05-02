@@ -34,23 +34,23 @@ exports.handler = async ({ queryStringParameters }) => {
         locations: {
           geohash_grid: { field: 'location', precision: 8 },
           aggregations: {
-            beers: { terms: { field: '_id' } },
+            beers: { terms: { field: 'beer.id' } },
           },
         },
       },
     },
   });
 
-  const checkIns = new Map(hits.hits.map(({ _id, _source }) => [_id, _source]));
+  const checkIns = new Map(hits.hits.map(({ _source }) => [_source.beer.id, _source]));
   const response = aggregations.locations.buckets.map(({ beers, key: geohash }) => {
     const clusterLocation = pick(['latitude', 'longitude'], decode(geohash));
 
     return {
       ...clusterLocation,
       distance: getDistance(location, clusterLocation),
-      beers: beers.buckets.map(({ key: checkInId }) => {
-        const { beer } = checkIns.get(checkInId);
-        return { ...beer, image_url: `https://images.punkapi.com/v2/${beer.id}.png` };
+      beers: beers.buckets.map(({ key: beerId, doc_count: count }) => {
+        const { beer } = checkIns.get(beerId);
+        return { ...beer, count, image_url: `https://images.punkapi.com/v2/${beer.id}.png` };
       }),
     };
   });

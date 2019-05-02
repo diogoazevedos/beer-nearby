@@ -34,8 +34,7 @@ const mockSearch = jest.fn().mockResolvedValue({
           key: '6fem96bj',
           beers: {
             buckets: [
-              { key: 'b5KpcGoBqvA79y4uztog' },
-              { key: 'cZKpcGoBqvA79y4u7Nqq' },
+              { key: 18, doc_count: 2 },
             ],
           },
         },
@@ -70,13 +69,7 @@ test('should return nearby a check-ins', async () => {
           name: 'Russian Doll – India Pale Ale',
           tagline: 'Nesting Hop Bomb.',
           description: 'The levels of hops vary throughout the range. We love hops, so all four beers are big, bitter badasses, but by tweaking the amount of each hop used later in the boil and during dry- hopping, we can balance the malty backbone with some unexpected flavours. Simcoe is used in the whirlpool for all four beers, and yet still lends different characters to each',
-          image_url: 'https://images.punkapi.com/v2/18.png',
-        },
-        {
-          id: 18,
-          name: 'Russian Doll – India Pale Ale',
-          tagline: 'Nesting Hop Bomb.',
-          description: 'The levels of hops vary throughout the range. We love hops, so all four beers are big, bitter badasses, but by tweaking the amount of each hop used later in the boil and during dry- hopping, we can balance the malty backbone with some unexpected flavours. Simcoe is used in the whirlpool for all four beers, and yet still lends different characters to each',
+          count: 2,
           image_url: 'https://images.punkapi.com/v2/18.png',
         },
       ],
@@ -99,7 +92,7 @@ test('should return nearby a check-ins', async () => {
         locations: {
           geohash_grid: { field: 'location', precision: 8 },
           aggregations: {
-            beers: { terms: { field: '_id' } },
+            beers: { terms: { field: 'beer.id' } },
           },
         },
       },
